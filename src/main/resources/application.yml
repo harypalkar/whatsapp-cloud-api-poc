@@ -43,12 +43,14 @@ logging:
 whatsapp:
   access-token: ${WHATSAPP_TOKEN:}
   phone-number-id: ${WHATSAPP_PHONE_NUMBER_ID:1226308087231072}
-  business-account-id: ${WHATSAPP_BUSINESS_ACCOUNT_ID:}
+  business-account-id: ${WHATSAPP_BUSINESS_ACCOUNT_ID:1583394760167591}
   verify-token: ${WHATSAPP_VERIFY_TOKEN:AltitudeLabs@2026}
   template-name: ${WHATSAPP_TEMPLATE_NAME:altitude_welcome_promo}
   template-language: ${WHATSAPP_TEMPLATE_LANGUAGE:en}
-  # 0 = fixed template body (your Meta preview). Set 2 if template uses {{1}} name + {{2}} promo.
-  template-body-param-count: ${WHATSAPP_TEMPLATE_BODY_PARAM_COUNT:0}
+  # Meta template id (WhatsApp Manager): 1602927314499274
+  template-id: ${WHATSAPP_TEMPLATE_ID:1602927314499274}
+  # 0 = fixed template body. 2 = {{1}} name + {{2}} promo.
+  template-body-param-count: ${WHATSAPP_TEMPLATE_BODY_PARAM_COUNT:2}
   display-phone-number: ${WHATSAPP_DISPLAY_PHONE:919512618333}
   api-version: ${WHATSAPP_API_VERSION:v23.0}
   auto-reply-message: ${WHATSAPP_AUTO_REPLY_MESSAGE:Thank you for contacting Altitude Labs.}

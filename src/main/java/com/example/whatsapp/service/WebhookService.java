@@ -71,10 +71,11 @@ public class WebhookService {
             return;
         }
         log.info(
-                "Delivery/read status: waMessageId={}, status={}, recipient={}",
+                "Delivery/read status: waMessageId={}, status={}, recipient={}, errors={}",
                 status.getId(),
                 status.getStatus(),
-                status.getRecipient_id());
+                status.getRecipient_id(),
+                status.getErrors());
         conversationService.updateDeliveryStatus(status.getId(), status.getStatus());
     }
 

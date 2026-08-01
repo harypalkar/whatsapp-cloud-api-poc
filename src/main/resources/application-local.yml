@@ -22,10 +22,10 @@ spring:
       enabled: true
       path: /h2-console
 
-# Local E2E while marketing template is IN REVIEW
+# Local E2E — approved marketing template
 whatsapp:
-  template-name: 3p_direct_integration_test_template
+  template-name: altitude_welcome_promo
   template-language: en
-  template-body-param-count: 0
+  template-body-param-count: 2
   phone-number-id: 1226308087231072
 

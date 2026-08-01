@@ -35,6 +35,9 @@ public class WhatsAppProperties {
     /** Maps to whatsapp.template-language */
     private String templateLanguage = "en";
 
+    /** WhatsApp Manager template id (documentation / ops reference). */
+    private String templateId = "1602927314499274";
+
     /**
      * How many body variables the Meta template expects.
      * 0 = fixed body (as in current altitude_welcome_promo preview: Customer / WELCOME100 hardcoded).
