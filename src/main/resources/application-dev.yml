@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:whatsapp_dev;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+logging:
+  level:
+    com.example.whatsapp: DEBUG
+
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true

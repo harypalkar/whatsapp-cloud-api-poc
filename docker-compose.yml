@@ -1,0 +1,70 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: whatsapp-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-whatsapp_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-whatsapp_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - whatsapp-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: whatsapp-api
+    ports:
+      - "8080:8080"
+    volumes:
+      - app_logs:/app/logs
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      LOGGING_FILE_PATH: /app/logs
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-whatsapp_db}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      WHATSAPP_TOKEN: ${WHATSAPP_TOKEN:-your-access-token}
+      WHATSAPP_PHONE_NUMBER_ID: ${WHATSAPP_PHONE_NUMBER_ID:-1226308087231072}
+      WHATSAPP_BUSINESS_ACCOUNT_ID: ${WHATSAPP_BUSINESS_ACCOUNT_ID:-}
+      WHATSAPP_VERIFY_TOKEN: ${WHATSAPP_VERIFY_TOKEN:-AltitudeLabs@2026}
+      WHATSAPP_API_VERSION: ${WHATSAPP_API_VERSION:-v23.0}
+      WHATSAPP_TEMPLATE_NAME: ${WHATSAPP_TEMPLATE_NAME:-altitude_welcome_promo}
+      WHATSAPP_TEMPLATE_LANGUAGE: ${WHATSAPP_TEMPLATE_LANGUAGE:-en}
+      WHATSAPP_DISPLAY_PHONE: ${WHATSAPP_DISPLAY_PHONE:-919512618333}
+      WHATSAPP_AUTO_REPLY_MESSAGE: ${WHATSAPP_AUTO_REPLY_MESSAGE:-Thank you for contacting Altitude Labs.}
+      SWAGGER_ENABLED: ${SWAGGER_ENABLED:-true}
+      JAVA_OPTS: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/api/health | grep -q '\"status\":\"UP\"' || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 90s
+    restart: unless-stopped
+    networks:
+      - whatsapp-network
+
+volumes:
+  postgres_data:
+    driver: local
+  app_logs:
+    driver: local
+
+networks:
+  whatsapp-network:
+    driver: bridge

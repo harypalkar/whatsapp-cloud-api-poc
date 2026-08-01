@@ -1,0 +1,31 @@
+# Use when PostgreSQL is not running locally:
+#   mvn spring-boot:run -Dspring-boot.run.profiles=local
+#
+# For production-like setup with PostgreSQL:
+#   docker compose -f docker-compose.dev.yml up -d
+#   mvn spring-boot:run
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:whatsapp_local;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+# Local E2E while marketing template is IN REVIEW
+whatsapp:
+  template-name: 3p_direct_integration_test_template
+  template-language: en
+  template-body-param-count: 0
+  phone-number-id: 1226308087231072
+

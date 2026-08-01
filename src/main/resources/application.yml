@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: whatsapp-cloud-api-poc
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/whatsapp_db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+server:
+  port: 8080
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    try-it-out-enabled: true
+
+logging:
+  file:
+    path: logs
+  level:
+    root: INFO
+    com.example.whatsapp: INFO
+
+# Meta WhatsApp Cloud API — secrets via env / .env (never commit real tokens)
+whatsapp:
+  access-token: ${WHATSAPP_TOKEN:}
+  phone-number-id: ${WHATSAPP_PHONE_NUMBER_ID:1226308087231072}
+  business-account-id: ${WHATSAPP_BUSINESS_ACCOUNT_ID:}
+  verify-token: ${WHATSAPP_VERIFY_TOKEN:AltitudeLabs@2026}
+  template-name: ${WHATSAPP_TEMPLATE_NAME:altitude_welcome_promo}
+  template-language: ${WHATSAPP_TEMPLATE_LANGUAGE:en}
+  # 0 = fixed template body (your Meta preview). Set 2 if template uses {{1}} name + {{2}} promo.
+  template-body-param-count: ${WHATSAPP_TEMPLATE_BODY_PARAM_COUNT:0}
+  display-phone-number: ${WHATSAPP_DISPLAY_PHONE:919512618333}
+  api-version: ${WHATSAPP_API_VERSION:v23.0}
+  auto-reply-message: ${WHATSAPP_AUTO_REPLY_MESSAGE:Thank you for contacting Altitude Labs.}
+  webhook:
+    verify-token: ${WHATSAPP_VERIFY_TOKEN:AltitudeLabs@2026}

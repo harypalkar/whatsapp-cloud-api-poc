@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Altitude Labs — Live Chat</title>
+  <style>
+    :root { --ink:#122; --line:#d7dde5; --bg:#f3f6f9; --accent:#0b6e4f; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: "Segoe UI", sans-serif; background:var(--bg); color:var(--ink); }
+    header { padding:1rem 1.25rem; background:#fff; border-bottom:1px solid var(--line); }
+    header h1 { margin:0; font-size:1.15rem; letter-spacing:.02em; }
+    header p { margin:.25rem 0 0; color:#556; font-size:.9rem; }
+    main { display:grid; grid-template-columns:280px 1fr; min-height:calc(100vh - 72px); }
+    aside, section { background:#fff; border-right:1px solid var(--line); padding:1rem; }
+    section { border-right:none; display:flex; flex-direction:column; }
+    label { display:block; font-size:.8rem; margin:.5rem 0 .2rem; }
+    input, textarea, select, button { width:100%; padding:.55rem .65rem; border:1px solid var(--line); border-radius:6px; font:inherit; }
+    button { background:var(--accent); color:#fff; border:none; cursor:pointer; margin-top:.75rem; }
+    button.secondary { background:#243b53; }
+    #timeline { flex:1; overflow:auto; padding:1rem; background:linear-gradient(#f8fafc,#eef2f6); }
+    .bubble { max-width:70%; margin:.4rem 0; padding:.65rem .8rem; border-radius:10px; white-space:pre-wrap; }
+    .OUT { margin-left:auto; background:#d9f3e8; }
+    .IN { margin-right:auto; background:#fff; border:1px solid var(--line); }
+    .meta { font-size:.72rem; color:#667; margin-top:.25rem; }
+    #status { font-size:.85rem; margin-top:.5rem; min-height:1.2em; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Altitude Labs Live Chat</h1>
+    <p>Sender +91 9512618333 · Customer +91 7506426501</p>
+  </header>
+  <main>
+    <aside>
+      <label>API Base</label>
+      <input id="baseUrl" value="http://localhost:8080" />
+      <label>Customer number</label>
+      <input id="mobile" value="917506426501" />
+      <label>Customer name</label>
+      <input id="name" value="Harish" />
+      <label>Promo code</label>
+      <input id="promo" value="WELCOME100" />
+      <label>Type</label>
+      <select id="type">
+        <option value="text">text</option>
+        <option value="template">template</option>
+        <option value="buttons">buttons</option>
+      </select>
+      <label>Message</label>
+      <textarea id="message" rows="5">Hello Harish, welcome to Altitude Labs.</textarea>
+      <button id="sendBtn">Send message</button>
+      <button id="refreshBtn" class="secondary">Refresh timeline</button>
+      <div id="status"></div>
+    </aside>
+    <section>
+      <div id="timeline"></div>
+    </section>
+  </main>
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const setStatus = (t) => { $("status").textContent = t; };
+
+    async function refresh() {
+      const base = $("baseUrl").value.replace(/\/$/, "");
+      const mobile = $("mobile").value.trim();
+      const res = await fetch(`${base}/api/v1/conversations/${mobile}`);
+      const data = await res.json();
+      const el = $("timeline");
+      el.innerHTML = "";
+      (data || []).forEach((m) => {
+        const div = document.createElement("div");
+        div.className = `bubble ${m.direction || "OUT"}`;
+        div.innerHTML = `${m.body || ""}<div class="meta">${m.direction || ""} · ${m.deliveryStatus || ""} · ${m.createdAt || ""}</div>`;
+        el.appendChild(div);
+      });
+      setStatus(`Loaded ${data.length || 0} messages`);
+    }
+
+    async function send() {
+      const base = $("baseUrl").value.replace(/\/$/, "");
+      const body = {
+        customerNumber: $("mobile").value.trim(),
+        customerName: $("name").value.trim(),
+        promoCode: $("promo").value.trim(),
+        message: $("message").value,
+        type: $("type").value,
+        templateName: "hello_world",
+        languageCode: "en_US"
+      };
+      setStatus("Sending...");
+      const res = await fetch(`${base}/api/v1/messages/send`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      const data = await res.json();
+      setStatus(res.ok ? "Sent — check WhatsApp" : `Error ${res.status}`);
+      console.log(data);
+      await refresh();
+    }
+
+    $("sendBtn").onclick = send;
+    $("refreshBtn").onclick = refresh;
+    refresh().catch((e) => setStatus(String(e)));
+    setInterval(() => refresh().catch(() => {}), 8000);
+  </script>
+</body>
+</html>

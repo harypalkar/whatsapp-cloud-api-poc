@@ -1,0 +1,227 @@
+{
+  "info": {
+    "name": "Altitude Labs WhatsApp Cloud API",
+    "description": "Production WhatsApp Cloud API — multi-tenant SaaS (X-Company-Id). Graph API v23.0, template altitude_welcome_promo.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "companyId", "value": "1" },
+    { "key": "customerNumber", "value": "917506426501" },
+    { "key": "verifyToken", "value": "AltitudeLabs@2026" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Send Marketing Template",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Company-Id", "value": "{{companyId}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mobile\": \"917506426501\",\n  \"customerName\": \"Harish\",\n  \"promoCode\": \"WELCOME100\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/messages/send-template"
+      }
+    },
+    {
+      "name": "Bulk Promo (many mobiles)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Company-Id", "value": "{{companyId}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"promoCode\": \"WELCOME100\",\n  \"mobiles\": [\n    \"917718986249\",\n    \"917506426501\",\n    \"917718884343\"\n  ]\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/messages/send-template/bulk"
+      }
+    },
+    {
+      "name": "Send Text V1",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Company-Id", "value": "{{companyId}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerNumber\": \"917506426501\",\n  \"customerName\": \"Harish\",\n  \"promoCode\": \"WELCOME100\",\n  \"message\": \"Hello Harish, welcome to Altitude Labs.\",\n  \"type\": \"text\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/messages/send"
+      }
+    },
+    {
+      "name": "Send Template via /send",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Company-Id", "value": "{{companyId}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerNumber\": \"917506426501\",\n  \"customerName\": \"Harish\",\n  \"promoCode\": \"WELCOME100\",\n  \"type\": \"template\",\n  \"templateName\": \"altitude_welcome_promo\",\n  \"languageCode\": \"en\",\n  \"message\": \"Welcome\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/messages/send"
+      }
+    },
+    {
+      "name": "Send Interactive Buttons",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Company-Id", "value": "{{companyId}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerNumber\": \"917506426501\",\n  \"customerName\": \"Harish\",\n  \"promoCode\": \"WELCOME100\",\n  \"message\": \"Hello Harish\\nWelcome to Altitude Labs.\\nUse Promo Code WELCOME100\",\n  \"type\": \"buttons\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/messages/send"
+      }
+    },
+    {
+      "name": "Send Image",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Company-Id", "value": "{{companyId}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerNumber\": \"917506426501\",\n  \"type\": \"image\",\n  \"mediaUrl\": \"https://www.w3.org/Graphics/PNG/nurbcup2si.png\",\n  \"caption\": \"Altitude Labs offer\",\n  \"message\": \"caption\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/messages/send"
+      }
+    },
+    {
+      "name": "Send PDF Document",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Company-Id", "value": "{{companyId}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerNumber\": \"917506426501\",\n  \"type\": \"document\",\n  \"mediaUrl\": \"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf\",\n  \"filename\": \"welcome.pdf\",\n  \"caption\": \"Weekend Offer\",\n  \"message\": \"doc\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/messages/send"
+      }
+    },
+    {
+      "name": "Send Video",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Company-Id", "value": "{{companyId}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerNumber\": \"917506426501\",\n  \"type\": \"video\",\n  \"mediaUrl\": \"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf\",\n  \"caption\": \"Product video\",\n  \"message\": \"video\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/messages/send"
+      }
+    },
+    {
+      "name": "Send Location",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Company-Id", "value": "{{companyId}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customerNumber\": \"917506426501\",\n  \"type\": \"location\",\n  \"latitude\": 19.076,\n  \"longitude\": 72.8777,\n  \"locationName\": \"Altitude Labs\",\n  \"locationAddress\": \"Mumbai, India\",\n  \"message\": \"Visit us\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/messages/send"
+      }
+    },
+    {
+      "name": "Webhook Verify GET",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/webhooks/meta/whatsapp?hub.mode=subscribe&hub.verify_token={{verifyToken}}&hub.challenge=1234567890"
+      }
+    },
+    {
+      "name": "Webhook Receive POST",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"object\": \"whatsapp_business_account\",\n  \"entry\": [{\n    \"id\": \"WABA\",\n    \"changes\": [{\n      \"field\": \"messages\",\n      \"value\": {\n        \"messaging_product\": \"whatsapp\",\n        \"statuses\": [{\n          \"id\": \"wamid.test\",\n          \"status\": \"delivered\",\n          \"timestamp\": \"1720000000\",\n          \"recipient_id\": \"917506426501\"\n        }],\n        \"messages\": [{\n          \"from\": \"917506426501\",\n          \"id\": \"wamid.inbound\",\n          \"timestamp\": \"1720000000\",\n          \"type\": \"text\",\n          \"text\": { \"body\": \"Interested\" }\n        }]\n      }\n    }]\n  }]\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/webhooks/meta/whatsapp"
+      }
+    },
+    {
+      "name": "Conversation Timeline",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/conversations/917506426501"
+      }
+    },
+    {
+      "name": "Onboard Customer (template)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Company-Id", "value": "{{companyId}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"mobile\": \"917506426501\",\n  \"name\": \"Harish\",\n  \"promoCode\": \"WELCOME100\",\n  \"sendWelcome\": true,\n  \"messageStyle\": \"template\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/customers/onboard"
+      }
+    },
+    {
+      "name": "Bulk Onboard Customers",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "X-Company-Id", "value": "{{companyId}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customers\": [\n    { \"mobile\": \"917506426501\", \"name\": \"Harish\", \"promoCode\": \"WELCOME100\", \"messageStyle\": \"template\" },\n    { \"mobile\": \"917718986249\", \"name\": \"Amit\", \"promoCode\": \"WELCOME100\", \"messageStyle\": \"template\" }\n  ]\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/customers/onboard/bulk"
+      }
+    },
+    {
+      "name": "List Customers",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/customers"
+      }
+    },
+    {
+      "name": "Swagger UI",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/swagger-ui.html"
+      }
+    }
+  ]
+}
