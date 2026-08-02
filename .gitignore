@@ -36,3 +36,8 @@ build/
 .env
 *.log
 logs/
+node_modules/
+dist/
+.angular/
+*.db
+.DS_Store

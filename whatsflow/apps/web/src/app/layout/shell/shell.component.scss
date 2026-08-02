@@ -1,0 +1,114 @@
+.shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  background: var(--wf-bg);
+}
+
+.sidebar {
+  background:
+    linear-gradient(180deg, #0b2f24 0%, #0a241c 100%);
+  color: #fff;
+  padding: 1.35rem 1rem 1.5rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.brand-wrap { margin-bottom: 1.4rem; padding: 0 0.35rem; }
+.brand {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.55rem;
+  font-weight: 700;
+}
+.tag {
+  margin: 0.2rem 0 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.78rem;
+}
+
+nav { display: flex; flex-direction: column; gap: 0.2rem; }
+.group {
+  margin: 1rem 0 0.35rem;
+  padding: 0 0.55rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+nav a {
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.55rem;
+  font-weight: 500;
+  font-size: 0.94rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+nav a.active,
+nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+nav a.active {
+  background: rgba(201, 149, 42, 0.22);
+  box-shadow: inset 2px 0 0 #c9952a;
+}
+
+.main { display: flex; flex-direction: column; min-width: 0; }
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.95rem 1.4rem;
+  border-bottom: 1px solid var(--wf-border);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+}
+
+.greeting {
+  display: grid;
+  gap: 0.1rem;
+  strong { font-size: 0.98rem; }
+  span { color: var(--wf-muted); font-size: 0.82rem; }
+}
+
+.top-actions {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.pill {
+  background: var(--wf-mint);
+  color: var(--wf-forest-deep);
+  padding: 0.35rem 0.7rem;
+  border-radius: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.content { padding: 1.35rem 1.4rem 2rem; }
+
+button {
+  border: 1px solid var(--wf-border);
+  background: var(--wf-card);
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button.danger {
+  border-color: rgba(180, 35, 24, 0.25);
+  color: #b42318;
+}
+
+@media (max-width: 900px) {
+  .shell { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .greeting span { display: none; }
+}

@@ -1,0 +1,39 @@
+<section class="page">
+  <header class="hero-strip">
+    <div>
+      <p class="eyebrow">Overview</p>
+      <h1>Dashboard</h1>
+      <p class="lede">Track delivery, campaigns, and conversations at a glance.</p>
+    </div>
+    <a class="cta" routerLink="/app/campaigns">New campaign</a>
+  </header>
+
+  <div class="grid">
+    <article class="stat" *ngFor="let s of stats">
+      <span>{{ s.label }}</span>
+      <strong>{{ s.value }}</strong>
+      <small>{{ s.hint }}</small>
+    </article>
+  </div>
+
+  <div class="split">
+    <section class="panel">
+      <h2>Quick actions</h2>
+      <div class="actions">
+        <a routerLink="/app/customers">Import customers</a>
+        <a routerLink="/app/templates">Approve templates</a>
+        <a routerLink="/app/inbox">Open live chat</a>
+        <a routerLink="/app/ai">Try AI Studio</a>
+      </div>
+    </section>
+    <section class="panel accent">
+      <h2>Go-live checklist</h2>
+      <ul>
+        <li>Complete company onboarding</li>
+        <li>Connect WhatsApp number</li>
+        <li>Sync an approved template</li>
+        <li>Send a test campaign</li>
+      </ul>
+    </section>
+  </div>
+</section>

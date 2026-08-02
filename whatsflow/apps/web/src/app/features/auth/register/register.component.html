@@ -1,0 +1,27 @@
+<section class="auth">
+  <div class="stage">
+    <div class="story">
+      <p class="brand">WhatsFlow</p>
+      <h1>Create your company workspace</h1>
+      <p>Onboard Meta, pick a plan, and start bulk WhatsApp in one guided flow.</p>
+      <ul>
+        <li>Embedded Signup ready</li>
+        <li>GST-friendly billing</li>
+        <li>Shared inbox + campaigns</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h2>Start free trial</h2>
+      <p class="sub">No credit card for local demo</p>
+      <form (ngSubmit)="submit()">
+        <label>Company <input [(ngModel)]="companyName" name="companyName" required /></label>
+        <label>Your name <input [(ngModel)]="fullName" name="fullName" required /></label>
+        <label>Email <input type="email" [(ngModel)]="email" name="email" required /></label>
+        <label>Password <input type="password" [(ngModel)]="password" name="password" required minlength="8" /></label>
+        <button type="submit" [disabled]="loading()">{{ loading() ? 'Creating…' : 'Create workspace' }}</button>
+        <p class="err" *ngIf="error()">{{ error() }}</p>
+      </form>
+      <a routerLink="/auth/login">Already have an account?</a>
+    </div>
+  </div>
+</section>

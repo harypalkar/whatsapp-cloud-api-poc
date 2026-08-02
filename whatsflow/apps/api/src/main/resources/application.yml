@@ -1,0 +1,107 @@
+spring:
+  application:
+    name: whatsflow-api
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/whatsflow}
+    username: ${DATABASE_USERNAME:whatsflow}
+    password: ${DATABASE_PASSWORD:whatsflow}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api
+
+whatsapp:
+  provider: ${WHATSFLOW_WHATSAPP_PROVIDER:mock}
+  access-token: ${WHATSAPP_TOKEN:}
+  phone-number-id: ${WHATSAPP_PHONE_NUMBER_ID:}
+  business-account-id: ${WHATSAPP_BUSINESS_ACCOUNT_ID:}
+  verify-token: ${WHATSAPP_VERIFY_TOKEN:AltitudeLabs@2026}
+  api-version: ${WHATSAPP_API_VERSION:v23.0}
+
+whatsflow:
+  jwt:
+    secret: ${WHATSFLOW_JWT_SECRET:change-me-to-a-long-random-secret-key-32b-min}
+    issuer: whatsflow
+    access-token-ttl: 15m
+    refresh-token-ttl: 14d
+  meta:
+    app-id: ${META_APP_ID:}
+    app-secret: ${META_APP_SECRET:}
+    config-id: ${META_EMBEDDED_SIGNUP_CONFIG_ID:}
+    graph-api-version: ${META_GRAPH_API_VERSION:v23.0}
+    redirect-uri: ${META_REDIRECT_URI:http://localhost:4200/meta/callback}
+  encryption:
+    aes-key: ${WHATSFLOW_AES_KEY:}
+  cors:
+    allowed-origins:
+      - http://localhost:4200
+  ai:
+    default-provider: openai
+    fallback-provider: ollama
+    default-model: gpt-4o-mini
+    embed-model: text-embedding-3-small
+    openai:
+      api-key: ${OPENAI_API_KEY:}
+      base-url: https://api.openai.com/v1
+    azure-openai:
+      api-key: ${AZURE_OPENAI_API_KEY:}
+      base-url: ${AZURE_OPENAI_BASE_URL:}
+      deployment: ${AZURE_OPENAI_DEPLOYMENT:gpt-4o-mini}
+      api-version: ${AZURE_OPENAI_API_VERSION:2024-02-15-preview}
+    gemini:
+      api-key: ${GEMINI_API_KEY:}
+      base-url: https://generativelanguage.googleapis.com/v1beta
+    claude:
+      api-key: ${ANTHROPIC_API_KEY:}
+      base-url: https://api.anthropic.com/v1
+      model: claude-3-5-sonnet-20241022
+    ollama:
+      base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+      chat-model: llama3.2
+      embed-model: nomic-embed-text
+    openrouter:
+      api-key: ${OPENROUTER_API_KEY:}
+      base-url: https://openrouter.ai/api/v1
+  rag:
+    chunk-size: 800
+    chunk-overlap: 120
+    top-k: 5
+    min-score: 0.65
+  payments:
+    default-provider: razorpay
+    currency: INR
+    razorpay:
+      key-id: ${RAZORPAY_KEY_ID:}
+      key-secret: ${RAZORPAY_KEY_SECRET:}
+      webhook-secret: ${RAZORPAY_WEBHOOK_SECRET:}
+    stripe:
+      api-key: ${STRIPE_API_KEY:}
+      webhook-secret: ${STRIPE_WEBHOOK_SECRET:}
+    cashfree:
+      app-id: ${CASHFREE_APP_ID:}
+      secret-key: ${CASHFREE_SECRET_KEY:}
+    phonepe:
+      merchant-id: ${PHONEPE_MERCHANT_ID:}
+      salt-key: ${PHONEPE_SALT_KEY:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus

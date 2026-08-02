@@ -1,0 +1,101 @@
+.auth {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+  background:
+    radial-gradient(700px 360px at 85% 0%, rgba(14, 74, 56, 0.14), transparent 55%),
+    linear-gradient(160deg, #eef5f1, #f7faf8);
+}
+
+.stage {
+  width: min(960px, 100%);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 1.1rem;
+  overflow: hidden;
+  border: 1px solid var(--wf-border);
+  box-shadow: var(--wf-shadow);
+  animation: rise 0.45s ease both;
+}
+
+.story {
+  padding: 2.4rem 2rem;
+  background: linear-gradient(165deg, #0b2f24, #14634b);
+  color: #f4faf7;
+}
+
+.brand {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 1.4rem;
+}
+
+.story h1 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  margin: 0 0 0.7rem;
+  line-height: 1.2;
+}
+
+.story > p {
+  color: rgba(244, 250, 247, 0.85);
+  line-height: 1.55;
+}
+
+.story ul {
+  margin: 1.4rem 0 0;
+  padding-left: 1.1rem;
+  color: rgba(244, 250, 247, 0.9);
+  display: grid;
+  gap: 0.4rem;
+}
+
+.panel {
+  background: #fff;
+  padding: 2.25rem 1.75rem;
+}
+
+h2 {
+  font-family: "Fraunces", Georgia, serif;
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+.sub { color: var(--wf-muted); margin: 0.35rem 0 0; }
+
+form { display: grid; gap: 0.8rem; margin-top: 1.25rem; }
+label { display: grid; gap: 0.35rem; font-size: 0.9rem; font-weight: 500; }
+input {
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--wf-border);
+  border-radius: 0.55rem;
+}
+button {
+  margin-top: 0.35rem;
+  background: var(--wf-forest);
+  color: #fff;
+  border: 0;
+  padding: 0.8rem;
+  border-radius: 0.55rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+button:disabled { opacity: 0.6; }
+.err { color: #b42318; margin: 0; }
+a {
+  display: inline-block;
+  margin-top: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 800px) {
+  .stage { grid-template-columns: 1fr; }
+}

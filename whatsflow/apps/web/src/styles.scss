@@ -1,0 +1,44 @@
+:root, body.theme-light {
+  --wf-bg: #eef5f1;
+  --wf-card: #ffffff;
+  --wf-sidebar: #0b2f24;
+  --wf-border: #c9ddd3;
+  --wf-muted: #4f675c;
+  --wf-text: #0f1f19;
+  --wf-accent: #c9952a;
+  --wf-forest: #0e4a38;
+  --wf-forest-deep: #07261c;
+  --wf-mint: #d7efe4;
+  --wf-radius: 0.65rem;
+  --wf-shadow: 0 12px 32px rgba(7, 38, 28, 0.08);
+}
+
+body.theme-dark {
+  --wf-bg: #0c1512;
+  --wf-card: #15221c;
+  --wf-sidebar: #081a14;
+  --wf-border: #2a3d34;
+  --wf-muted: #9bb0a5;
+  --wf-text: #e7f2ec;
+  --wf-accent: #e0b45a;
+  --wf-forest: #1f6b52;
+  --wf-forest-deep: #04140f;
+  --wf-mint: #1a3228;
+  --wf-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  font-family: "Manrope", system-ui, sans-serif;
+  color: var(--wf-text);
+  background: var(--wf-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--wf-forest); }
+button, input, select, textarea { font: inherit; }
+
+::selection {
+  background: rgba(14, 74, 56, 0.18);
+}

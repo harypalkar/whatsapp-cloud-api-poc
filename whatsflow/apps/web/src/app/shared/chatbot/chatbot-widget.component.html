@@ -1,0 +1,40 @@
+<div class="chatbot" [class.open]="open()">
+  <div class="panel" *ngIf="open()" role="dialog" aria-label="WhatsFlow assistant">
+    <header>
+      <div>
+        <strong>WhatsFlow Assistant</strong>
+        <span>Usually replies instantly</span>
+      </div>
+      <button type="button" class="icon" (click)="toggle()" aria-label="Close chat">×</button>
+    </header>
+
+    <div class="quick">
+      <button type="button" (click)="sendQuick('What are your plans?')">Plans</button>
+      <button type="button" (click)="sendQuick('How do I connect WhatsApp?')">WhatsApp setup</button>
+      <button type="button" (click)="sendQuick('How do campaigns work?')">Campaigns</button>
+    </div>
+
+    <div class="messages" #scroller>
+      <div *ngFor="let m of messages()" class="bubble" [class.user]="m.role === 'user'" [class.bot]="m.role === 'bot'">
+        {{ m.text }}
+      </div>
+      <div class="bubble bot typing" *ngIf="busy()">Typing…</div>
+    </div>
+
+    <form class="composer" (ngSubmit)="send()">
+      <input
+        [(ngModel)]="draft"
+        name="draft"
+        placeholder="Ask about WhatsFlow…"
+        autocomplete="off"
+        [disabled]="busy()"
+      />
+      <button type="submit" [disabled]="busy() || !draft.trim()">Send</button>
+    </form>
+  </div>
+
+  <button type="button" class="launcher" (click)="toggle()" [attr.aria-expanded]="open()">
+    <span *ngIf="!open()">Chat</span>
+    <span *ngIf="open()">Close</span>
+  </button>
+</div>

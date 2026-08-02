@@ -1,0 +1,125 @@
+<section class="onboard">
+  <header class="top">
+    <div>
+      <p class="eyebrow">WhatsFlow setup</p>
+      <h1>Company Onboarding</h1>
+    </div>
+    <button type="button" class="linkish" (click)="skipToDashboard()">Skip for now</button>
+  </header>
+
+  <div class="progress"><span [style.width.%]="progress()"></span></div>
+
+  <ol class="stepper">
+    <li *ngFor="let s of steps" [class.active]="step() === s.key" [class.done]="step() > s.key">
+      <span class="num">{{ s.key }}</span>
+      <span>{{ s.label }}</span>
+    </li>
+  </ol>
+
+  <p class="error" *ngIf="error()">{{ error() }}</p>
+  <p class="muted" *ngIf="loading()">Working…</p>
+
+  <!-- Step 1 -->
+  <div class="card" *ngIf="step() === 1">
+    <h2>Business details</h2>
+    <p class="muted">Tell us about your company. GST and logo help invoices and branding.</p>
+    <form class="grid-form" (ngSubmit)="saveBusiness()">
+      <label>Company name *<input [(ngModel)]="form.name" name="name" required /></label>
+      <label>GSTIN<input [(ngModel)]="form.gstin" name="gstin" placeholder="22AAAAA0000A1Z5" /></label>
+      <label class="full">Address line 1<input [(ngModel)]="form.addressLine1" name="addressLine1" /></label>
+      <label class="full">Address line 2<input [(ngModel)]="form.addressLine2" name="addressLine2" /></label>
+      <label>City<input [(ngModel)]="form.city" name="city" /></label>
+      <label>State<input [(ngModel)]="form.state" name="state" /></label>
+      <label>Pincode<input [(ngModel)]="form.pincode" name="pincode" /></label>
+      <label>Timezone<input [(ngModel)]="form.timezone" name="timezone" /></label>
+      <label class="full">Logo URL<input [(ngModel)]="form.logoUrl" name="logoUrl" placeholder="https://..." /></label>
+      <div class="actions full">
+        <button type="submit" [disabled]="loading() || !form.name">Continue</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="card" *ngIf="step() === 2">
+    <h2>Choose a plan</h2>
+    <p class="muted">You can upgrade anytime. Start with Growth for campaigns + inbox.</p>
+    <div class="plans">
+      <button
+        type="button"
+        class="plan"
+        *ngFor="let p of plans()"
+        [class.selected]="selectedPlan() === p.code"
+        (click)="choosePlan(p.code)">
+        <h3>{{ p.name }}</h3>
+        <p class="price">₹{{ p.priceMonthly }}<small>/mo</small></p>
+        <p>{{ p.description }}</p>
+        <ul>
+          <li>{{ p.maxAgents }} agents</li>
+          <li>{{ p.maxMessagesMonth | number }} messages / month</li>
+        </ul>
+      </button>
+    </div>
+    <div class="actions">
+      <button type="button" class="ghost" (click)="back()">Back</button>
+      <button type="button" (click)="savePlan()" [disabled]="loading()">Continue</button>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="card" *ngIf="step() === 3">
+    <h2>Meta Embedded Signup</h2>
+    <p class="muted">
+      Connect your Meta Business / WhatsApp Business Account. In local mode we simulate Embedded Signup
+      (no Meta app credentials required).
+    </p>
+    <div class="meta-box">
+      <button type="button" class="ghost" (click)="startMeta()" [disabled]="loading()">Prepare Meta session</button>
+      <pre *ngIf="metaSession()">{{ metaSession() | json }}</pre>
+      <p class="muted" *ngIf="metaSession()?.mode === 'SIMULATED'">
+        Mode: <strong>SIMULATED</strong> — click below to link Altitude Labs test WABA.
+      </p>
+    </div>
+    <div class="actions">
+      <button type="button" class="ghost" (click)="back()">Back</button>
+      <button type="button" (click)="completeMetaSimulated()" [disabled]="loading()">
+        Link Meta / WABA (simulate)
+      </button>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="card" *ngIf="step() === 4">
+    <h2>Connect WhatsApp number</h2>
+    <p class="muted">Confirm the business number that will send campaigns and receive inbox chats.</p>
+    <form class="grid-form" (ngSubmit)="connectWhatsApp()">
+      <label>Display phone<input [(ngModel)]="waForm.displayPhone" name="displayPhone" required /></label>
+      <label>Verified name<input [(ngModel)]="waForm.verifiedName" name="verifiedName" required /></label>
+      <div class="full preview" *ngIf="whatsappPreview()">
+        <p><strong>Phone Number ID:</strong> {{ whatsappPreview().phoneNumberId }}</p>
+        <p><strong>WABA:</strong> {{ whatsappPreview().wabaId }}</p>
+      </div>
+      <div class="actions full">
+        <button type="button" class="ghost" (click)="back()">Back</button>
+        <button type="submit" [disabled]="loading()">Connect number</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="card success" *ngIf="step() === 5">
+    <h2>You're ready</h2>
+    <p>
+      <strong>{{ company()?.name }}</strong> is connected on plan
+      <strong>{{ company()?.planCode }}</strong>
+      with WhatsApp <strong>{{ waForm.displayPhone }}</strong>.
+    </p>
+    <ul>
+      <li>Import customers</li>
+      <li>Launch a campaign</li>
+      <li>Open the live inbox</li>
+    </ul>
+    <div class="actions">
+      <button type="button" (click)="finish()" [disabled]="loading()">Go to dashboard</button>
+    </div>
+  </div>
+</section>

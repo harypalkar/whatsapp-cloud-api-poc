@@ -1,0 +1,8 @@
+api:
+  replicaCount: 3
+  image: ghcr.io/harypalkar/whatsflow-api:latest
+web:
+  replicaCount: 2
+  image: ghcr.io/harypalkar/whatsflow-web:latest
+ingress:
+  host: app.whatsflow.local

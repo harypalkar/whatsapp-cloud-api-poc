@@ -1,0 +1,30 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand-wrap">
+      <div class="brand">WhatsFlow</div>
+      <p class="tag">Business messaging</p>
+    </div>
+    <nav>
+      <p class="group">Workspace</p>
+      <a *ngFor="let item of navPrimary" [routerLink]="item.path" routerLinkActive="active">{{ item.label }}</a>
+      <p class="group">Grow</p>
+      <a *ngFor="let item of navGrow" [routerLink]="item.path" routerLinkActive="active">{{ item.label }}</a>
+      <p class="group">Manage</p>
+      <a *ngFor="let item of navManage" [routerLink]="item.path" routerLinkActive="active">{{ item.label }}</a>
+    </nav>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <div class="greeting">
+        <strong>Console</strong>
+        <span>Operate campaigns and inbox in one place</span>
+      </div>
+      <div class="top-actions">
+        <span class="pill">{{ auth.email() }}</span>
+        <button type="button" (click)="theme.toggle()">Theme</button>
+        <button type="button" class="danger" (click)="auth.logout()">Logout</button>
+      </div>
+    </header>
+    <main class="content"><router-outlet /></main>
+  </div>
+</div>

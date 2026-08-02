@@ -1,0 +1,154 @@
+<div class="landing">
+  <header class="nav">
+    <a class="brand" routerLink="/">WhatsFlow</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#services">Product</a>
+      <a href="#features">Capabilities</a>
+      <a href="#industries">Use cases</a>
+      <a href="#pricing">Plans</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="link" routerLink="/auth/login">Login</a>
+      <a class="btn btn-primary" routerLink="/auth/register">Start free</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="brand-mark">WhatsFlow</p>
+      <h1>WhatsApp workspace for campaigns, inbox, and AI</h1>
+      <p class="lede">
+        Help your team connect Meta, launch template campaigns, and reply to customers from one console.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" routerLink="/auth/register">Open free workspace</a>
+        <a class="btn btn-ghost" href="#pricing">Compare plans</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="lead band" id="contact">
+    <div class="lead-copy">
+      <p class="eyebrow">Talk with WhatsFlow</p>
+      <h2>Share your use case. We’ll map the right rollout.</h2>
+      <p>Campaigns, Cloud API connect, inbox ops, or AI-assisted replies — tell us where you want to start.</p>
+    </div>
+    <form class="lead-form" (ngSubmit)="submitLead()">
+      <label>Name<input [(ngModel)]="lead.name" name="name" required placeholder="Your name" /></label>
+      <label>Phone<input [(ngModel)]="lead.phone" name="phone" required placeholder="+91…" /></label>
+      <label>Email<input type="email" [(ngModel)]="lead.email" name="email" required placeholder="you@company.com" /></label>
+      <label>Interest
+        <select [(ngModel)]="lead.requirement" name="requirement">
+          <option *ngFor="let r of requirements" [value]="r">{{ r }}</option>
+        </select>
+      </label>
+      <button class="btn btn-primary" type="submit">Request callback</button>
+      <p class="ok" *ngIf="leadSent">Thanks — WhatsFlow will follow up shortly.</p>
+    </form>
+  </section>
+
+  <section class="section" id="why">
+    <p class="eyebrow">Why WhatsFlow</p>
+    <h2>A practical console for WhatsApp operations</h2>
+    <div class="reason-grid">
+      <article *ngFor="let r of reasons">
+        <h3>{{ r.title }}</h3>
+        <p>{{ r.desc }}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section tint" id="services">
+    <p class="eyebrow">Product</p>
+    <h2>Modules that cover send, reply, and measure</h2>
+    <div class="service-grid">
+      <article *ngFor="let s of services">
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.desc }}</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <p class="eyebrow">Capabilities</p>
+    <h2>What you get inside the workspace</h2>
+    <ul class="feature-chips">
+      <li *ngFor="let f of features">{{ f }}</li>
+    </ul>
+  </section>
+
+  <section class="section location">
+    <div>
+      <p class="eyebrow">Built for India teams</p>
+      <h2>Company onboarding with GST, plans, and Meta connect</h2>
+      <p>
+        WhatsFlow is designed for multi-company SaaS use: register a workspace, finish onboarding,
+        then operate campaigns and inbox without juggling separate tools.
+      </p>
+    </div>
+  </section>
+
+  <section class="section tint" id="industries">
+    <p class="eyebrow">Use cases</p>
+    <h2>Useful across customer-facing teams</h2>
+    <ul class="industry-grid">
+      <li *ngFor="let i of industries">{{ i }}</li>
+    </ul>
+  </section>
+
+  <section class="section" id="stories">
+    <p class="eyebrow">Product outcomes</p>
+    <h2>What WhatsFlow is built to deliver</h2>
+    <div class="quote-grid">
+      <blockquote *ngFor="let t of outcomes">
+        <p>“{{ t.quote }}”</p>
+        <footer>
+          <strong>{{ t.title }}</strong>
+        </footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="section tint" id="pricing">
+    <p class="eyebrow">Plans</p>
+    <h2>Pick a plan that matches your volume</h2>
+    <div class="plan-grid">
+      <article *ngFor="let p of plans" [class.featured]="p.featured">
+        <h3>{{ p.name }}</h3>
+        <p class="price">{{ p.price }}<small>{{ p.unit }}</small></p>
+        <p>{{ p.desc }}</p>
+        <a class="btn" [class.btn-primary]="p.featured" [class.btn-ghost]="!p.featured" routerLink="/auth/register">
+          Choose {{ p.name }}
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div>
+      <h2>Create your WhatsFlow workspace</h2>
+      <p>Register your company, complete onboarding, and connect WhatsApp when you are ready.</p>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-light" routerLink="/auth/register">Start free</a>
+      <a class="btn btn-ghost-light" href="#contact">Contact WhatsFlow</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>
+      <strong class="brand">WhatsFlow</strong>
+      <p>Original WhatsApp operations platform for campaigns, inbox, and AI assist.</p>
+    </div>
+    <div>
+      <p>sales@whatsflow.app</p>
+      <p>+91 95126 18333</p>
+    </div>
+    <div class="footer-links">
+      <a routerLink="/auth/login">Login</a>
+      <a routerLink="/auth/register">Sign up</a>
+      <a href="#services">Product</a>
+    </div>
+  </footer>
+</div>
