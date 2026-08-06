@@ -1,8 +1,60 @@
-<section class="page">
-  <header class="page-header">
-    <h1>Analytics</h1>
+<section class="wf-page">
+  <header class="wf-page-header">
+    <div>
+      <p class="eyebrow">Trends</p>
+      <h1>Analytics</h1>
+      <p class="lede">Monthly messages, revenue, customers, and campaign volume.</p>
+    </div>
+    <span class="growth wf-badge ok" *ngIf="data()?.growthPct">+{{ data().growthPct }}% growth</span>
   </header>
-  <div class="card">
-    <p class="muted">Production-ready Analytics module shell. Wire to API services next.</p>
-  </div>
+
+  <div class="wf-card" *ngIf="loading()"><div class="wf-skeleton wf-skeleton-block"></div></div>
+
+  <ng-container *ngIf="!loading() && data() as d">
+    <div class="wf-grid-2">
+      <article class="wf-card chart">
+        <h2>Messages</h2>
+        <div class="bars">
+          <div class="col" *ngFor="let v of d.messages; let i = index">
+            <div class="bar" [style.height]="pct(v, max(d.messages))"></div>
+            <span>{{ d.months?.[i] }}</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-card chart">
+        <h2>Revenue (×1k INR)</h2>
+        <div class="line-wrap">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <polyline [attr.points]="linePoints(d.revenue)" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" />
+          </svg>
+          <div class="months">
+            <span *ngFor="let m of d.months">{{ m }}</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-card chart">
+        <h2>Customers</h2>
+        <div class="bars cool">
+          <div class="col" *ngFor="let v of d.customers; let i = index">
+            <div class="bar" [style.height]="pct(v, max(d.customers))"></div>
+            <span>{{ d.months?.[i] }}</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="wf-card chart">
+        <h2>Campaigns</h2>
+        <div class="line-wrap accent">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <polyline [attr.points]="linePoints(d.campaigns)" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" />
+          </svg>
+          <div class="months">
+            <span *ngFor="let m of d.months">{{ m }}</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </ng-container>
 </section>

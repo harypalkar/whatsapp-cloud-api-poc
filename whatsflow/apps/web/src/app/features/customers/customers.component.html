@@ -1,11 +1,57 @@
-<section class="page">
-  <header class="page-header">
-    <h1>Customers</h1>
+<section class="wf-page">
+  <header class="wf-page-header">
+    <div>
+      <p class="eyebrow">Audience</p>
+      <h1>Customers</h1>
+      <p class="lede">Search and manage contacts synced for WhatsApp outreach.</p>
+    </div>
+    <div class="wf-toolbar">
+      <input class="wf-input search" type="search" placeholder="Search name, mobile, email…"
+             [(ngModel)]="q" (ngModelChange)="onSearch()" />
+    </div>
   </header>
-  <div class="card">
-    
-<p>Grid · tags · groups · import/export · opt-in/out · blacklist</p>
-<p class="muted">API: `/v1/customers`</p>
 
+  <div class="wf-table-wrap" *ngIf="!loading(); else skel">
+    <table class="wf-table" *ngIf="rows().length; else empty">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Mobile</th>
+          <th>Email</th>
+          <th>City</th>
+          <th>Tag</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of rows()">
+          <td><strong>{{ c.name || '—' }}</strong></td>
+          <td>{{ c.mobileE164 }}</td>
+          <td>{{ c.email || '—' }}</td>
+          <td>{{ city(c) }}</td>
+          <td><span class="wf-badge">{{ tag(c) }}</span></td>
+          <td>
+            <span class="wf-badge danger" *ngIf="c.blacklisted">Blacklisted</span>
+            <span class="wf-badge ok" *ngIf="!c.blacklisted && c.optedIn">Opted in</span>
+            <span class="wf-badge warn" *ngIf="!c.blacklisted && !c.optedIn">Opted out</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #empty>
+      <div class="wf-empty">No customers match your search.</div>
+    </ng-template>
+  </div>
+
+  <ng-template #skel>
+    <div class="wf-card"><div class="wf-skeleton wf-skeleton-line" *ngFor="let i of [1,2,3,4,5,6]"></div></div>
+  </ng-template>
+
+  <div class="wf-pager" *ngIf="totalElements()">
+    <span>{{ fmt(totalElements()) }} contacts · page {{ page() + 1 }} of {{ totalPages() || 1 }}</span>
+    <div class="wf-toolbar">
+      <button type="button" class="wf-btn" [disabled]="page() === 0" (click)="prev()">Previous</button>
+      <button type="button" class="wf-btn" [disabled]="page() + 1 >= totalPages()" (click)="next()">Next</button>
+    </div>
   </div>
 </section>

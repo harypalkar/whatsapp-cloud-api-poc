@@ -1,8 +1,44 @@
-<section class="page">
-  <header class="page-header">
-    <h1>Platform Admin</h1>
+<section class="wf-page">
+  <header class="wf-page-header">
+    <div>
+      <p class="eyebrow">Platform</p>
+      <h1>Admin</h1>
+      <p class="lede">Tenant health, subscriptions, usage, and support tickets.</p>
+    </div>
+    <span class="wf-badge ok" *ngIf="data()?.serverHealth">{{ data().serverHealth }}</span>
   </header>
-  <div class="card">
-    <p class="muted">Production-ready Platform Admin module shell. Wire to API services next.</p>
-  </div>
+
+  <div class="wf-card" *ngIf="loading()"><div class="wf-skeleton wf-skeleton-block"></div></div>
+
+  <ng-container *ngIf="!loading() && data() as d">
+    <div class="wf-grid-4">
+      <article class="wf-stat"><span>Companies</span><strong>{{ fmt(d.companies) }}</strong></article>
+      <article class="wf-stat"><span>Platform revenue</span><strong>{{ inr(d.revenue) }}</strong></article>
+      <article class="wf-stat"><span>Messages</span><strong>{{ d.usage?.messages }}</strong></article>
+      <article class="wf-stat"><span>API calls</span><strong>{{ d.usage?.apiCalls }}</strong></article>
+    </div>
+
+    <div class="wf-grid-2">
+      <section class="wf-card">
+        <h2>Subscriptions</h2>
+        <div class="subs">
+          <div *ngFor="let s of subEntries(d.subscriptions)">
+            <span>{{ s.key }}</span>
+            <strong>{{ s.value }}</strong>
+          </div>
+        </div>
+        <p class="wf-muted">Storage {{ d.usage?.storage }}</p>
+      </section>
+      <section class="wf-card">
+        <h2>Support tickets</h2>
+        <div class="ticket" *ngFor="let t of d.tickets">
+          <div>
+            <strong>{{ t.id }}</strong>
+            <p>{{ t.subject }}</p>
+          </div>
+          <span class="wf-badge" [class.ok]="t.status === 'RESOLVED'" [class.warn]="t.status === 'OPEN'">{{ t.status }}</span>
+        </div>
+      </section>
+    </div>
+  </ng-container>
 </section>

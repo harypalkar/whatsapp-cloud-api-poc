@@ -1,11 +1,46 @@
-<section class="page">
-  <header class="page-header">
-    <h1>Campaigns</h1>
+<section class="wf-page">
+  <header class="wf-page-header">
+    <div>
+      <p class="eyebrow">Outreach</p>
+      <h1>Campaigns</h1>
+      <p class="lede">Health camps, admissions, and promo broadcasts with template + coupon tracking.</p>
+    </div>
+    <button type="button" class="wf-btn wf-btn-primary">Create campaign</button>
   </header>
-  <div class="card">
-    
-<p>Builder · schedule · recurring · analytics</p>
-<p class="muted">API: `/v1/campaigns`</p>
 
+  <div class="wf-grid-3 summary" *ngIf="catalogStats() as s">
+    <article class="wf-stat"><span>Total sent</span><strong>{{ fmt(s.sent) }}</strong></article>
+    <article class="wf-stat"><span>Delivered</span><strong>{{ fmt(s.delivered) }}</strong></article>
+    <article class="wf-stat"><span>Read</span><strong>{{ fmt(s.read) }}</strong></article>
   </div>
+
+  <ng-container *ngIf="loading(); else list">
+    <div class="cards">
+      <div class="camp wf-card" *ngFor="let i of [1,2,3]"><div class="wf-skeleton wf-skeleton-block"></div></div>
+    </div>
+  </ng-container>
+
+  <ng-template #list>
+    <div class="wf-empty" *ngIf="!campaigns().length">No campaigns yet.</div>
+    <div class="cards">
+      <article class="camp wf-card" *ngFor="let c of campaigns(); let i = index">
+        <div class="top">
+          <div>
+            <p class="eyebrow">{{ c.templateName || 'Template' }}</p>
+            <h2>{{ c.name }}</h2>
+          </div>
+          <span class="wf-badge" [ngClass]="badgeClass(c.status)">{{ c.status }}</span>
+        </div>
+        <div class="meta">
+          <span>Promo <strong>{{ c.promoCode || '—' }}</strong></span>
+          <span>Lang <strong>{{ c.language || 'en' }}</strong></span>
+        </div>
+        <div class="stats" *ngIf="placeholderStats(i) as st">
+          <div><span>Sent</span><strong>{{ fmt(st.sent) }}</strong></div>
+          <div><span>Delivered</span><strong>{{ fmt(st.delivered) }}</strong></div>
+          <div><span>Read</span><strong>{{ fmt(st.read) }}</strong></div>
+        </div>
+      </article>
+    </div>
+  </ng-template>
 </section>

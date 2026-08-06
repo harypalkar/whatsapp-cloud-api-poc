@@ -12,4 +12,8 @@ public interface ConversationRepository extends JpaRepository<Conversation, UUID
     Page<Conversation> findByTenantIdAndDeletedFalseOrderByModifiedDateDesc(UUID tenantId, Pageable pageable);
     Optional<Conversation> findByIdAndTenantIdAndDeletedFalse(UUID id, UUID tenantId);
     Optional<Conversation> findByTenantIdAndCustomerIdAndDeletedFalse(UUID tenantId, UUID customerId);
+    long countByTenantIdAndDeletedFalse(UUID tenantId);
+
+    @org.springframework.data.jpa.repository.Query("select coalesce(sum(c.unreadCount),0) from Conversation c where c.tenantId = :tenantId and c.deleted = false")
+    long sumUnreadByTenantId(@org.springframework.data.repository.query.Param("tenantId") UUID tenantId);
 }

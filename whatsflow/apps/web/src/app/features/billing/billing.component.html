@@ -1,8 +1,54 @@
-<section class="page">
-  <header class="page-header">
-    <h1>Billing</h1>
+<section class="wf-page">
+  <header class="wf-page-header">
+    <div>
+      <p class="eyebrow">Subscription</p>
+      <h1>Billing</h1>
+      <p class="lede">Plans, GST invoices, and payment history for ABC Hospital.</p>
+    </div>
+    <span class="wf-badge ok" *ngIf="data()?.plan">Current: {{ data().plan }}</span>
   </header>
-  <div class="card">
-    <p class="muted">Production-ready Billing module shell. Wire to API services next.</p>
-  </div>
+
+  <div class="wf-card" *ngIf="loading()"><div class="wf-skeleton wf-skeleton-block"></div></div>
+
+  <ng-container *ngIf="!loading() && data() as d">
+    <div class="plans">
+      <article class="plan wf-card" *ngFor="let p of d.plans" [class.current]="p.code === d.plan">
+        <h2>{{ p.code }}</h2>
+        <p class="price">{{ inr(p.price) }}<span>/mo</span></p>
+        <p class="wf-muted">{{ p.agents }} agents</p>
+        <button type="button" class="wf-btn" [class.wf-btn-primary]="p.code === d.plan" disabled>
+          {{ p.code === d.plan ? 'Active plan' : 'Upgrade' }}
+        </button>
+      </article>
+    </div>
+
+    <div class="wf-grid-2">
+      <section class="wf-card">
+        <h2>Invoices</h2>
+        <div class="wf-table-wrap flat">
+          <table class="wf-table">
+            <thead><tr><th>ID</th><th>Date</th><th>Amount</th><th>GST</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr *ngFor="let inv of d.invoices">
+                <td>{{ inv.id }}</td>
+                <td>{{ inv.date }}</td>
+                <td>{{ inr(inv.amount) }}</td>
+                <td>{{ inr(inv.gst) }}</td>
+                <td><span class="wf-badge ok">{{ inv.status }}</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="wf-card">
+        <h2>Coupons & payments</h2>
+        <div class="chips">
+          <span class="wf-badge" *ngFor="let c of d.coupons">{{ c.code }} · {{ c.discount }}</span>
+        </div>
+        <ul class="pays">
+          <li *ngFor="let p of d.payments">{{ p.mode }} — <strong>{{ p.status }}</strong></li>
+        </ul>
+      </section>
+    </div>
+  </ng-container>
 </section>

@@ -1,6 +1,33 @@
-.page-header h1 { font-family: "Fraunces", Georgia, serif; margin: 0 0 1rem; font-size: 1.8rem; }
-.card { background: var(--wf-card); border: 1px solid var(--wf-border); border-radius: .75rem; padding: 1.25rem; }
-.muted { color: var(--wf-muted); }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
-.stat { padding: 1rem; border-radius: .6rem; background: var(--wf-bg); border: 1px solid var(--wf-border); }
-.stat strong { display: block; font-size: 1.4rem; }
+.list { display: grid; gap: 0.9rem; }
+.flow { display: grid; gap: 0.9rem; }
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+h2 { margin: 0; font-family: "Fraunces", Georgia, serif; font-size: 1.2rem; }
+.wf-muted { margin: 0.25rem 0 0; font-size: 0.85rem; }
+
+.nodes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+.node {
+  background: var(--wf-bg);
+  border: 1px solid var(--wf-border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.arrow { color: var(--wf-muted); font-weight: 700; }
+
+.result {
+  border-color: color-mix(in srgb, var(--wf-forest) 40%, var(--wf-border));
+  background: color-mix(in srgb, var(--wf-mint) 50%, var(--wf-card));
+  ul { margin: 0.5rem 0 0; padding-left: 1.1rem; color: var(--wf-muted); }
+}

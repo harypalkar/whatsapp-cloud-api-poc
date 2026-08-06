@@ -1,8 +1,38 @@
-<section class="page">
-  <header class="page-header">
-    <h1>Templates</h1>
+<section class="wf-page">
+  <header class="wf-page-header">
+    <div>
+      <p class="eyebrow">Meta templates</p>
+      <h1>Templates</h1>
+      <p class="lede">Approved WhatsApp message templates ready for campaigns.</p>
+    </div>
+    <div class="wf-toolbar">
+      <select class="wf-select" [(ngModel)]="category">
+        <option value="ALL">All categories</option>
+        <option value="MARKETING">Marketing</option>
+        <option value="UTILITY">Utility</option>
+      </select>
+      <input class="wf-input search" type="search" placeholder="Search templates…" [(ngModel)]="q" />
+    </div>
   </header>
-  <div class="card">
-    <p class="muted">Production-ready Templates module shell. Wire to API services next.</p>
+
+  <div class="wf-empty" *ngIf="loading()"><div class="wf-skeleton wf-skeleton-block"></div></div>
+
+  <div class="grid" *ngIf="!loading()">
+    <article class="tpl wf-card" *ngFor="let t of filtered()">
+      <div class="top">
+        <h2>{{ t.name }}</h2>
+        <span class="wf-badge ok">{{ t.status }}</span>
+      </div>
+      <div class="meta">
+        <span class="wf-badge">{{ t.category }}</span>
+        <span class="wf-muted">{{ t.language }}</span>
+        <span class="wf-muted" *ngIf="t.coupon">Coupon {{ t.coupon }}</span>
+      </div>
+      <p class="body">{{ t.body }}</p>
+      <div class="btns" *ngIf="t.buttons?.length">
+        <span *ngFor="let b of t.buttons">{{ b }}</span>
+      </div>
+    </article>
   </div>
+  <div class="wf-empty" *ngIf="!loading() && !filtered().length">No templates found.</div>
 </section>

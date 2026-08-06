@@ -1,14 +1,96 @@
-<section class="page">
-  <header class="page-header">
-    <h1>Live Chat</h1>
+<section class="wf-page inbox">
+  <header class="wf-page-header">
+    <div>
+      <p class="eyebrow">Live Chat</p>
+      <h1>Inbox</h1>
+      <p class="lede">WhatsApp-style threads with delivery status, media preview, and internal notes.</p>
+    </div>
   </header>
-  <div class="card">
-    
-<div class="chat-layout">
-  <aside class="threads">Conversation list · unread badges</aside>
-  <section class="thread">WhatsApp-style thread · media · assign agent · notes</section>
-  <aside class="profile">Customer profile</aside>
-</div>
 
+  <div class="layout">
+    <aside class="list-pane">
+      <input class="wf-input" type="search" placeholder="Filter conversations…" [(ngModel)]="filter" />
+      <div class="skel" *ngIf="loadingList()">
+        <div class="wf-skeleton wf-skeleton-line" *ngFor="let i of [1,2,3,4,5]"></div>
+      </div>
+      <button
+        type="button"
+        class="conv"
+        *ngFor="let c of filtered()"
+        [class.active]="c.id === selectedId()"
+        (click)="select(c.id)"
+      >
+        <div class="row">
+          <strong>{{ customerName(c) }}</strong>
+          <span class="unread" *ngIf="c.unreadCount">{{ c.unreadCount }}</span>
+        </div>
+        <p>{{ c.lastMessagePreview || 'No messages' }}</p>
+        <span class="wf-badge" [class.ok]="c.status === 'OPEN'" [class.neutral]="c.status !== 'OPEN'">{{ c.status }}</span>
+      </button>
+      <div class="wf-empty" *ngIf="!loadingList() && !filtered().length">No conversations</div>
+    </aside>
+
+    <section class="thread-pane">
+      <ng-container *ngIf="selected() as conv; else noSel">
+        <header class="thread-head">
+          <div>
+            <strong>{{ customerName(conv) }}</strong>
+            <span>{{ customerMobile(conv) }}</span>
+          </div>
+          <label class="assign">
+            Assign
+            <select [(ngModel)]="agent">
+              <option *ngFor="let a of agents" [value]="a">{{ a }}</option>
+            </select>
+          </label>
+        </header>
+
+        <div class="messages" *ngIf="!loadingMsgs(); else msgSkel">
+          <div
+            class="bubble"
+            *ngFor="let m of messages()"
+            [class.out]="isOut(m)"
+            [class.in]="!isOut(m) && !m.note"
+            [class.note]="m.note"
+          >
+            <div class="media" *ngIf="isMedia(m)">
+              <span class="material-symbols-outlined">description</span>
+              <div>
+                <strong>{{ m.mediaUrl || 'Attachment' }}</strong>
+                <small>Tap to preview (demo)</small>
+              </div>
+            </div>
+            <p>{{ m.body }}</p>
+            <small *ngIf="!m.note">{{ statusLabel(m.deliveryStatus) }}</small>
+            <small *ngIf="m.note">Internal note · {{ agent }}</small>
+          </div>
+          <div class="typing" *ngIf="typing()">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="wf-empty" *ngIf="!messages().length">No messages in this thread</div>
+        </div>
+        <ng-template #msgSkel>
+          <div class="messages"><div class="wf-skeleton wf-skeleton-block"></div></div>
+        </ng-template>
+
+        <footer class="composer">
+          <div class="emoji-bar" *ngIf="showEmoji()">
+            <button type="button" *ngFor="let e of emojis" (click)="insertEmoji(e)">{{ e }}</button>
+          </div>
+          <div class="reply-row">
+            <button type="button" class="icon-btn" (click)="showEmoji.set(!showEmoji())" aria-label="Emoji">☺</button>
+            <input class="wf-input" [(ngModel)]="reply" placeholder="Type a reply…" (keyup.enter)="sendReply()" />
+            <button type="button" class="wf-btn wf-btn-primary" (click)="sendReply()">Send</button>
+          </div>
+          <div class="note-row">
+            <input class="wf-input" [(ngModel)]="note" placeholder="Add internal note…" (keyup.enter)="addNote()" />
+            <button type="button" class="wf-btn" (click)="addNote()">Note</button>
+          </div>
+        </footer>
+      </ng-container>
+      <ng-template #noSel>
+        <div class="wf-empty tall">Select a conversation to view the thread</div>
+      </ng-template>
+    </section>
   </div>
 </section>

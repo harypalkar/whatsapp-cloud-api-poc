@@ -1,6 +1,2 @@
-.page-header h1 { font-family: "Fraunces", Georgia, serif; margin: 0 0 1rem; font-size: 1.8rem; }
-.card { background: var(--wf-card); border: 1px solid var(--wf-border); border-radius: .75rem; padding: 1.25rem; }
-.muted { color: var(--wf-muted); }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
-.stat { padding: 1rem; border-radius: .6rem; background: var(--wf-bg); border: 1px solid var(--wf-border); }
-.stat strong { display: block; font-size: 1.4rem; }
+.search { min-width: min(280px, 70vw); max-width: 320px; }
+td strong { font-weight: 600; }

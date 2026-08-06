@@ -26,9 +26,19 @@ export class LoginComponent {
   ) {}
 
   submit() {
+    this.doLogin(this.email, this.password);
+  }
+
+  demoLogin() {
+    this.email = 'demo@whatsflow.ai';
+    this.password = 'Demo@123';
+    this.doLogin(this.email, this.password);
+  }
+
+  private doLogin(email: string, password: string) {
     this.loading.set(true);
     this.error.set('');
-    this.auth.login(this.email, this.password).subscribe({
+    this.auth.login(email, password).subscribe({
       next: () => {
         this.onboarding.status().subscribe({
           next: (res) => {

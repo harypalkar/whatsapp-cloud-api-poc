@@ -13,6 +13,10 @@
         <label>Password <input type="password" [(ngModel)]="password" name="password" required /></label>
         <label class="row"><input type="checkbox" [(ngModel)]="remember" name="remember" /> Remember me</label>
         <button type="submit" [disabled]="loading()">{{ loading() ? 'Signing in…' : 'Sign in' }}</button>
+        <button type="button" class="demo" [disabled]="loading()" (click)="demoLogin()">
+          {{ loading() ? 'Signing in…' : 'Demo Login' }}
+        </button>
+        <p class="hint">Use demo@whatsflow.ai · Demo@123 for the ABC Hospital workspace</p>
         <p class="err" *ngIf="error()">{{ error() }}</p>
       </form>
       <div class="links">

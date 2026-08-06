@@ -1,6 +1,25 @@
-.page-header h1 { font-family: "Fraunces", Georgia, serif; margin: 0 0 1rem; font-size: 1.8rem; }
-.card { background: var(--wf-card); border: 1px solid var(--wf-border); border-radius: .75rem; padding: 1.25rem; }
-.muted { color: var(--wf-muted); }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
-.stat { padding: 1rem; border-radius: .6rem; background: var(--wf-bg); border: 1px solid var(--wf-border); }
-.stat strong { display: block; font-size: 1.4rem; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0.9rem;
+}
+.form { display: grid; gap: 0.65rem; }
+.top { display: flex; justify-content: space-between; gap: 0.5rem; }
+h2 { margin: 0; font-family: "Fraunces", Georgia, serif; font-size: 1.15rem; }
+.type { margin: 0; font-size: 0.85rem; }
+.url-box {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  background: var(--wf-bg);
+  border: 1px solid var(--wf-border);
+  border-radius: 0.55rem;
+  padding: 0.55rem 0.65rem;
+}
+code {
+  flex: 1;
+  font-size: 0.85rem;
+  color: var(--wf-forest);
+  word-break: break-all;
+}

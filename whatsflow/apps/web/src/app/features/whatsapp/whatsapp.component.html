@@ -1,0 +1,45 @@
+<section class="wf-page">
+  <header class="wf-page-header">
+    <div>
+      <p class="eyebrow">Channel</p>
+      <h1>WhatsApp</h1>
+      <p class="lede">Cloud API connection for the ABC Hospital business number.</p>
+    </div>
+    <span class="wf-badge" [class.ok]="connected()" [class.danger]="!connected()" *ngIf="account()">
+      {{ connected() ? 'Connected' : (account()?.status || 'Disconnected') }}
+    </span>
+  </header>
+
+  <div class="wf-card" *ngIf="loading()"><div class="wf-skeleton wf-skeleton-block"></div></div>
+
+  <ng-container *ngIf="!loading() && account() as a">
+    <div class="hero wf-card" [class.on]="connected()">
+      <div>
+        <p class="eyebrow">Verified business</p>
+        <h2>{{ a.verifiedName || 'ABC Hospital' }}</h2>
+        <p class="phone">{{ a.displayPhone || '—' }}</p>
+      </div>
+      <div class="status-pill" [class.on]="connected()">
+        {{ connected() ? 'Live' : 'Offline' }}
+      </div>
+    </div>
+
+    <div class="wf-grid-2">
+      <section class="wf-card">
+        <h2>Account details</h2>
+        <div class="kv"><span>Phone number ID</span><strong>{{ a.phoneNumberId || '—' }}</strong></div>
+        <div class="kv"><span>WABA ID</span><strong>{{ a.wabaId || '—' }}</strong></div>
+        <div class="kv"><span>Business ID</span><strong>{{ a.businessId || '—' }}</strong></div>
+        <div class="kv"><span>Status</span><strong>{{ a.status || '—' }}</strong></div>
+      </section>
+      <section class="wf-card">
+        <h2>Credentials</h2>
+        <div class="kv"><span>Access token</span><strong>{{ a.accessTokenMasked || '••••••••' }}</strong></div>
+        <div class="kv"><span>Webhook verify token</span><strong>{{ a.webhookVerifyToken || '—' }}</strong></div>
+        <p class="wf-muted note">Demo mode uses a mock WhatsApp provider — tokens are masked for display.</p>
+      </section>
+    </div>
+  </ng-container>
+
+  <div class="wf-empty" *ngIf="!loading() && !account()">Unable to load WhatsApp account.</div>
+</section>

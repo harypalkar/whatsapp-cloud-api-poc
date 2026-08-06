@@ -38,3 +38,13 @@ whatsflow:
   ai:
     default-provider: mock
     fallback-provider: mock
+  demo:
+    enabled: true
+    email: demo@whatsflow.ai
+    password: Demo@123
+    full-name: Dr Rajesh Sharma
+    company-name: ABC Hospital
+    customers: 500
+    campaigns: 20
+    conversations: 150
+    forms: 10

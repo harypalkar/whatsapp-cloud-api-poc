@@ -1,39 +1,95 @@
-<section class="page">
+<section class="wf-page dash">
   <header class="hero-strip">
     <div>
-      <p class="eyebrow">Overview</p>
+      <p class="eyebrow">ABC Hospital · Overview</p>
       <h1>Dashboard</h1>
-      <p class="lede">Track delivery, campaigns, and conversations at a glance.</p>
+      <p class="lede">Delivery, campaigns, and conversations at a glance.</p>
     </div>
-    <a class="cta" routerLink="/app/campaigns">New campaign</a>
+    <div class="hero-actions">
+      <div class="bell-wrap">
+        <button type="button" class="bell" (click)="toggleBell()" aria-label="Notifications">
+          <span class="bell-icon">Bell</span>
+          <span class="count" *ngIf="unreadNotifs()">{{ unreadNotifs() }}</span>
+        </button>
+        <div class="bell-panel" *ngIf="bellOpen()">
+          <p class="bell-title">Notifications</p>
+          <button type="button" class="notif" *ngFor="let n of notifications()" [class.unread]="!n.read">
+            <strong>{{ n.title }}</strong>
+            <span>{{ n.type }}</span>
+          </button>
+          <p class="wf-muted" *ngIf="!notifications().length">No notifications</p>
+        </div>
+      </div>
+      <a class="cta" routerLink="/app/campaigns">New campaign</a>
+    </div>
   </header>
 
-  <div class="grid">
-    <article class="stat" *ngFor="let s of stats">
-      <span>{{ s.label }}</span>
-      <strong>{{ s.value }}</strong>
-      <small>{{ s.hint }}</small>
-    </article>
-  </div>
+  <ng-container *ngIf="loading(); else ready">
+    <div class="wf-grid-4">
+      <div class="wf-stat" *ngFor="let i of [1,2,3,4]"><div class="wf-skeleton wf-skeleton-line"></div><div class="wf-skeleton wf-skeleton-line"></div></div>
+    </div>
+    <div class="wf-skeleton wf-skeleton-block"></div>
+  </ng-container>
 
-  <div class="split">
-    <section class="panel">
-      <h2>Quick actions</h2>
-      <div class="actions">
-        <a routerLink="/app/customers">Import customers</a>
-        <a routerLink="/app/templates">Approve templates</a>
-        <a routerLink="/app/inbox">Open live chat</a>
-        <a routerLink="/app/ai">Try AI Studio</a>
+  <ng-template #ready>
+    <div class="wf-empty" *ngIf="!data(); else content">Could not load dashboard.</div>
+    <ng-template #content>
+      <div class="wf-grid-4">
+        <article class="wf-stat">
+          <span>Messages today</span>
+          <strong>{{ fmt(data().messagesToday) }}</strong>
+          <small>{{ data().deliveryRate }}% delivered</small>
+        </article>
+        <article class="wf-stat">
+          <span>Customers</span>
+          <strong>{{ fmt(data().customers) }}</strong>
+          <small>{{ fmt(data().conversations) }} conversations</small>
+        </article>
+        <article class="wf-stat">
+          <span>Campaigns</span>
+          <strong>{{ fmt(data().campaigns) }}</strong>
+          <small>{{ data().readRate }}% read rate</small>
+        </article>
+        <article class="wf-stat">
+          <span>Revenue (month)</span>
+          <strong>{{ inr(data().revenueMonth) }}</strong>
+          <small>{{ fmt(data().unreadChats) }} unread chats</small>
+        </article>
       </div>
-    </section>
-    <section class="panel accent">
-      <h2>Go-live checklist</h2>
-      <ul>
-        <li>Complete company onboarding</li>
-        <li>Connect WhatsApp number</li>
-        <li>Sync an approved template</li>
-        <li>Send a test campaign</li>
-      </ul>
-    </section>
-  </div>
+
+      <div class="split">
+        <section class="wf-card chart-card">
+          <div class="card-head">
+            <h2>Messages this week</h2>
+            <span class="wf-muted">Last 7 days</span>
+          </div>
+          <div class="bars" *ngIf="data().chartMessages?.length; else noChart">
+            <div class="bar-col" *ngFor="let v of data().chartMessages; let i = index">
+              <div class="bar" [style.height]="barHeight(v)" [attr.title]="v"></div>
+              <span>{{ data().chartLabels?.[i] || ('D' + (i + 1)) }}</span>
+            </div>
+          </div>
+          <ng-template #noChart><p class="wf-muted">No chart data</p></ng-template>
+        </section>
+
+        <section class="wf-card">
+          <h2>Recent activity</h2>
+          <ul class="activity">
+            <li *ngFor="let a of data().recentActivity">
+              <strong>{{ a.title }}</strong>
+              <span>{{ a.time }}</span>
+            </li>
+          </ul>
+          <p class="wf-muted" *ngIf="!data().recentActivity?.length">No recent activity</p>
+        </section>
+      </div>
+
+      <section class="wf-card">
+        <h2>Quick actions</h2>
+        <div class="actions">
+          <a *ngFor="let q of data().quickActions" [routerLink]="actionLink(q)">{{ q }}</a>
+        </div>
+      </section>
+    </ng-template>
+  </ng-template>
 </section>

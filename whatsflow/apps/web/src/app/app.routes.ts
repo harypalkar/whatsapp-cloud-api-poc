@@ -25,6 +25,7 @@ export const routes: Routes = [
       { path: 'reports', loadComponent: () => import('./features/reports/reports.component').then(m => m.ReportsComponent) },
       { path: 'analytics', loadComponent: () => import('./features/analytics/analytics.component').then(m => m.AnalyticsComponent) },
       { path: 'billing', loadComponent: () => import('./features/billing/billing.component').then(m => m.BillingComponent) },
+      { path: 'whatsapp', loadComponent: () => import('./features/whatsapp/whatsapp.component').then(m => m.WhatsappComponent) },
       { path: 'settings', loadComponent: () => import('./features/settings/settings.component').then(m => m.SettingsComponent) },
       { path: 'profile', loadComponent: () => import('./features/profile/profile.component').then(m => m.ProfileComponent) },
       { path: 'admin', loadComponent: () => import('./features/admin/admin.component').then(m => m.AdminComponent) },

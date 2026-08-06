@@ -1,6 +1,57 @@
-.page-header h1 { font-family: "Fraunces", Georgia, serif; margin: 0 0 1rem; font-size: 1.8rem; }
-.card { background: var(--wf-card); border: 1px solid var(--wf-border); border-radius: .75rem; padding: 1.25rem; }
-.muted { color: var(--wf-muted); }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
-.stat { padding: 1rem; border-radius: .6rem; background: var(--wf-bg); border: 1px solid var(--wf-border); }
-.stat strong { display: block; font-size: 1.4rem; }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.9rem;
+}
+
+.camp {
+  display: grid;
+  gap: 0.85rem;
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+.camp:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--wf-forest) 45%, var(--wf-border));
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--wf-muted);
+  font-weight: 700;
+}
+
+h2 {
+  margin: 0.25rem 0 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.2rem;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.1rem;
+  color: var(--wf-muted);
+  font-size: 0.85rem;
+  strong { color: var(--wf-text); }
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--wf-border);
+}
+.stats div { display: grid; gap: 0.15rem; }
+.stats span { font-size: 0.72rem; color: var(--wf-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.stats strong { font-family: "Fraunces", Georgia, serif; font-size: 1.15rem; }

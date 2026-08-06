@@ -4,6 +4,7 @@
       <div class="brand">WhatsFlow</div>
       <p class="tag">Business messaging</p>
     </div>
+    <div class="demo-chip">Demo · ABC Hospital</div>
     <nav>
       <p class="group">Workspace</p>
       <a *ngFor="let item of navPrimary" [routerLink]="item.path" routerLinkActive="active">{{ item.label }}</a>
@@ -20,11 +21,26 @@
         <span>Operate campaigns and inbox in one place</span>
       </div>
       <div class="top-actions">
-        <span class="pill">{{ auth.email() }}</span>
+        <div class="notif-wrap">
+          <button type="button" class="bell" (click)="toggleNotif($event)" aria-label="Notifications">
+            <span class="material-symbols-outlined">notifications</span>
+            <em *ngIf="unreadCount()">{{ unreadCount() }}</em>
+          </button>
+          <div class="notif-panel" *ngIf="notifOpen()">
+            <p class="notif-title">Notifications</p>
+            <button type="button" class="notif-item" *ngFor="let n of notifications()">
+              <strong>{{ n.title }}</strong>
+              <span>{{ n.type }}</span>
+            </button>
+            <p class="empty" *ngIf="!notifications().length">No notifications</p>
+          </div>
+        </div>
+        <a class="pill" routerLink="/app/profile">{{ auth.email() }}</a>
         <button type="button" (click)="theme.toggle()">Theme</button>
         <button type="button" class="danger" (click)="auth.logout()">Logout</button>
       </div>
     </header>
+    <div class="toast" *ngIf="toast() as t">{{ t }}</div>
     <main class="content"><router-outlet /></main>
   </div>
 </div>

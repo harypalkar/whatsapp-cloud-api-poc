@@ -13,7 +13,7 @@
   border-right: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.brand-wrap { margin-bottom: 1.4rem; padding: 0 0.35rem; }
+.brand-wrap { margin-bottom: 0.85rem; padding: 0 0.35rem; }
 .brand {
   font-family: "Fraunces", Georgia, serif;
   font-size: 1.55rem;
@@ -23,6 +23,17 @@
   margin: 0.2rem 0 0;
   color: rgba(255, 255, 255, 0.55);
   font-size: 0.78rem;
+}
+
+.demo-chip {
+  margin: 0 0.35rem 1rem;
+  padding: 0.4rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #0b2f24;
+  background: linear-gradient(120deg, #e0b45a, #f3d48a);
 }
 
 nav { display: flex; flex-direction: column; gap: 0.2rem; }
@@ -89,9 +100,99 @@ nav a.active {
   border-radius: 0.5rem;
   font-size: 0.82rem;
   font-weight: 600;
+  text-decoration: none;
 }
 
 .content { padding: 1.35rem 1.4rem 2rem; }
+
+.notif-wrap { position: relative; }
+
+.bell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  padding: 0;
+  em {
+    position: absolute;
+    top: -0.2rem;
+    right: -0.15rem;
+    min-width: 1.05rem;
+    height: 1.05rem;
+    border-radius: 999px;
+    background: #c9952a;
+    color: #0b2f24;
+    font-style: normal;
+    font-size: 0.65rem;
+    font-weight: 800;
+    display: grid;
+    place-items: center;
+    padding: 0 0.2rem;
+  }
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined", sans-serif;
+  font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+  font-size: 1.25rem;
+}
+
+.notif-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.45rem);
+  width: min(320px, 80vw);
+  background: var(--wf-card);
+  border: 1px solid var(--wf-border);
+  border-radius: 0.75rem;
+  box-shadow: 0 16px 40px rgba(7, 38, 28, 0.12);
+  padding: 0.65rem;
+  z-index: 30;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.notif-title {
+  margin: 0 0 0.25rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--wf-muted);
+}
+
+.notif-item {
+  display: grid;
+  gap: 0.15rem;
+  text-align: left;
+  width: 100%;
+  strong { font-size: 0.88rem; }
+  span { font-size: 0.75rem; color: var(--wf-muted); font-weight: 500; }
+}
+
+.notif-panel .empty {
+  margin: 0.35rem 0;
+  color: var(--wf-muted);
+  font-size: 0.85rem;
+}
+
+.toast {
+  margin: 0.75rem 1.4rem 0;
+  padding: 0.7rem 0.95rem;
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, var(--wf-forest) 12%, var(--wf-card));
+  border: 1px solid color-mix(in srgb, var(--wf-forest) 28%, var(--wf-border));
+  color: var(--wf-forest-deep);
+  font-weight: 600;
+  animation: toast-in 0.35s ease both;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 button {
   border: 1px solid var(--wf-border);

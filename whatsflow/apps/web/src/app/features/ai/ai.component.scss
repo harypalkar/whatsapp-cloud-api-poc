@@ -1,6 +1,37 @@
-.page-header h1 { font-family: "Fraunces", Georgia, serif; margin: 0 0 1rem; font-size: 1.8rem; }
-.card { background: var(--wf-card); border: 1px solid var(--wf-border); border-radius: .75rem; padding: 1.25rem; }
-.muted { color: var(--wf-muted); }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
-.stat { padding: 1rem; border-radius: .6rem; background: var(--wf-bg); border: 1px solid var(--wf-border); }
-.stat strong { display: block; font-size: 1.4rem; }
+.studio { display: grid; gap: 0.75rem; align-content: start; }
+.out {
+  background: var(--wf-bg);
+  border: 1px solid var(--wf-border);
+  border-radius: 0.55rem;
+  padding: 0.85rem;
+  p { margin: 0 0 0.35rem; line-height: 1.45; }
+}
+.summary { margin: 0 0 0.75rem; line-height: 1.5; }
+.trans {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  margin-top: 0.75rem;
+  padding: 0.65rem;
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, var(--wf-mint) 55%, var(--wf-card));
+  p { margin: 0; }
+}
+.preset {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 0.45rem;
+  border: 1px solid var(--wf-border);
+  background: var(--wf-bg);
+  border-radius: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  cursor: pointer;
+  color: inherit;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+.preset:hover { border-color: var(--wf-forest); }
+.faq { margin-bottom: 0.75rem; }
+.faq p { margin: 0.2rem 0 0; color: var(--wf-muted); font-size: 0.9rem; }
+ul { margin: 0; padding-left: 1.1rem; color: var(--wf-muted); display: grid; gap: 0.4rem; }

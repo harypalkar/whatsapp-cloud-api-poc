@@ -1,8 +1,44 @@
-<section class="page">
-  <header class="page-header">
-    <h1>Automation Builder</h1>
+<section class="wf-page">
+  <header class="wf-page-header">
+    <div>
+      <p class="eyebrow">Workflows</p>
+      <h1>Automations</h1>
+      <p class="lede">Visual node chains for reminders, admissions, and renewals.</p>
+    </div>
   </header>
-  <div class="card">
-    <p class="muted">Production-ready Automation Builder module shell. Wire to API services next.</p>
+
+  <div class="wf-card result" *ngIf="lastRun() as r">
+    <strong>{{ r.message || 'Scenario executed' }}</strong>
+    <ul *ngIf="r.steps?.length">
+      <li *ngFor="let s of r.steps">{{ s }}</li>
+    </ul>
   </div>
+
+  <div class="wf-card" *ngIf="loading()"><div class="wf-skeleton wf-skeleton-block"></div></div>
+
+  <div class="list" *ngIf="!loading()">
+    <article class="wf-card flow" *ngFor="let w of workflows()">
+      <div class="top">
+        <div>
+          <h2>{{ w.name }}</h2>
+          <p class="wf-muted">{{ w.runs }} runs · {{ w.status }}</p>
+        </div>
+        <button
+          type="button"
+          class="wf-btn wf-btn-primary"
+          [disabled]="running() === scenarioIdFor(w)"
+          (click)="run(scenarioIdFor(w))"
+        >
+          {{ running() === scenarioIdFor(w) ? 'Running…' : 'Run scenario' }}
+        </button>
+      </div>
+      <div class="nodes">
+        <ng-container *ngFor="let n of w.nodes; let last = last">
+          <div class="node">{{ n }}</div>
+          <span class="arrow" *ngIf="!last">→</span>
+        </ng-container>
+      </div>
+    </article>
+  </div>
+  <div class="wf-empty" *ngIf="!loading() && !workflows().length">No automations configured.</div>
 </section>

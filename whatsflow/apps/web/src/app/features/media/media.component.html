@@ -1,8 +1,35 @@
-<section class="page">
-  <header class="page-header">
-    <h1>Media Library</h1>
+<section class="wf-page">
+  <header class="wf-page-header">
+    <div>
+      <p class="eyebrow">Library</p>
+      <h1>Media</h1>
+      <p class="lede">Campaign creatives, brochures, and import files by folder.</p>
+    </div>
+    <div class="wf-toolbar">
+      <select class="wf-select" [(ngModel)]="folder">
+        <option *ngFor="let f of folders()" [value]="f">{{ f === 'ALL' ? 'All folders' : f }}</option>
+      </select>
+      <select class="wf-select" [(ngModel)]="type">
+        <option value="ALL">All types</option>
+        <option value="image">Images</option>
+        <option value="video">Videos</option>
+        <option value="pdf">PDF</option>
+        <option value="excel">Excel</option>
+        <option value="word">Word</option>
+      </select>
+    </div>
   </header>
-  <div class="card">
-    <p class="muted">Production-ready Media Library module shell. Wire to API services next.</p>
+
+  <div class="wf-card" *ngIf="loading()"><div class="wf-skeleton wf-skeleton-block"></div></div>
+
+  <div class="grid" *ngIf="!loading()">
+    <article class="tile wf-card" *ngFor="let m of filtered()">
+      <div class="thumb" [attr.data-type]="m.type">{{ icon(m.type) }}</div>
+      <div class="meta">
+        <strong>{{ m.name }}</strong>
+        <span>{{ m.folder }} · {{ m.size }}</span>
+      </div>
+    </article>
   </div>
+  <div class="wf-empty" *ngIf="!loading() && !filtered().length">No media in this folder.</div>
 </section>

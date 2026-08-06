@@ -1,8 +1,28 @@
-<section class="page">
-  <header class="page-header">
-    <h1>Forms Builder</h1>
+<section class="wf-page">
+  <header class="wf-page-header">
+    <div>
+      <p class="eyebrow">Lead capture</p>
+      <h1>Forms</h1>
+      <p class="lede">Public intake forms linked from WhatsApp campaigns and automations.</p>
+    </div>
   </header>
-  <div class="card">
-    <p class="muted">Production-ready Forms Builder module shell. Wire to API services next.</p>
+
+  <div class="wf-card" *ngIf="loading()"><div class="wf-skeleton wf-skeleton-line" *ngFor="let i of [1,2,3,4]"></div></div>
+
+  <div class="grid" *ngIf="!loading()">
+    <article class="wf-card form" *ngFor="let f of forms()">
+      <div class="top">
+        <h2>{{ f.name }}</h2>
+        <span class="wf-badge" [class.ok]="f.status === 'PUBLISHED'" [class.warn]="f.status !== 'PUBLISHED'">{{ f.status }}</span>
+      </div>
+      <p class="wf-muted type">{{ f.formType }} · {{ responses(f) }} responses</p>
+      <div class="url-box">
+        <code>{{ publicUrl(f.publicToken) }}</code>
+        <button type="button" class="wf-btn" (click)="copy(f.publicToken)">
+          {{ copied() === f.publicToken ? 'Copied' : 'Copy URL' }}
+        </button>
+      </div>
+    </article>
   </div>
+  <div class="wf-empty" *ngIf="!loading() && !forms().length">No forms published yet.</div>
 </section>

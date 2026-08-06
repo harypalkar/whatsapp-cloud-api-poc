@@ -1,11 +1,57 @@
-<section class="page">
-  <header class="page-header">
-    <h1>AI Studio</h1>
+<section class="wf-page">
+  <header class="wf-page-header">
+    <div>
+      <p class="eyebrow">Assist</p>
+      <h1>AI Studio</h1>
+      <p class="lede">Reply suggestions, summaries, FAQ, and campaign ideas for ABC Hospital.</p>
+    </div>
   </header>
-  <div class="card">
-    
-<p>Chatbot · RAG · reply suggestions · campaign writer · sentiment</p>
-<p class="muted">API: `/v1/ai/**` `/v1/rag/**`</p>
 
-  </div>
+  <div class="wf-card" *ngIf="loading()"><div class="wf-skeleton wf-skeleton-block"></div></div>
+
+  <ng-container *ngIf="!loading() && catalog() as c">
+    <div class="wf-grid-2">
+      <section class="wf-card studio">
+        <h2>Suggest reply</h2>
+        <textarea class="wf-textarea" [(ngModel)]="input" rows="4"></textarea>
+        <button type="button" class="wf-btn wf-btn-primary" [disabled]="suggesting()" (click)="suggest()">
+          {{ suggesting() ? 'Generating…' : 'Generate suggestion' }}
+        </button>
+        <div class="out" *ngIf="suggestion() as s">
+          <p>{{ s.content }}</p>
+          <small class="wf-muted" *ngIf="s.model">{{ s.model }} · {{ s.latencyMs }}ms</small>
+        </div>
+      </section>
+
+      <section class="wf-card">
+        <h2>Conversation summary</h2>
+        <p class="summary">{{ c.summary }}</p>
+        <p class="wf-muted">Sentiment: <strong>{{ c.sentiment }}</strong></p>
+        <div class="trans" *ngIf="c.translation?.hi">
+          <span class="wf-badge">HI</span>
+          <p>{{ c.translation.hi }}</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="wf-grid-3">
+      <section class="wf-card">
+        <h2>Preset replies</h2>
+        <button type="button" class="preset" *ngFor="let s of c.suggestions" (click)="usePreset(s)">{{ s }}</button>
+      </section>
+      <section class="wf-card">
+        <h2>FAQ</h2>
+        <div class="faq" *ngFor="let f of c.faq">
+          <strong>{{ f.q }}</strong>
+          <p>{{ f.a }}</p>
+        </div>
+      </section>
+      <section class="wf-card">
+        <h2>Campaign ideas</h2>
+        <ul>
+          <li *ngFor="let i of c.campaignIdeas">{{ i }}</li>
+        </ul>
+      </section>
+    </div>
+  </ng-container>
 </section>

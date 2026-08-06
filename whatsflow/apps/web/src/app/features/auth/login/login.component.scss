@@ -79,7 +79,18 @@ button {
   cursor: pointer;
   font-weight: 600;
 }
+button.demo {
+  background: transparent;
+  color: var(--wf-forest);
+  border: 1px solid var(--wf-border);
+}
+button.demo:hover { border-color: var(--wf-forest); background: var(--wf-mint); }
 button:disabled { opacity: 0.6; }
+.hint {
+  margin: 0.15rem 0 0;
+  color: var(--wf-muted);
+  font-size: 0.78rem;
+}
 .links {
   display: flex;
   justify-content: space-between;

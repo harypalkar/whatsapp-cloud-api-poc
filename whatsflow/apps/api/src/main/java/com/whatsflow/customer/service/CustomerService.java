@@ -83,6 +83,8 @@ public class CustomerService {
     }
 
     private CustomerResponse toDto(Customer c) {
-        return new CustomerResponse(c.getId(), c.getMobileE164(), c.getName(), c.getEmail(), c.isOptedIn(), c.isBlacklisted());
+        return new CustomerResponse(
+                c.getId(), c.getMobileE164(), c.getName(), c.getEmail(),
+                c.isOptedIn(), c.isBlacklisted(), c.getAttributesJson());
     }
 }

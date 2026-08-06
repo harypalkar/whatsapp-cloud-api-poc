@@ -37,6 +37,7 @@ public class TenantInterceptor implements HandlerInterceptor {
     private boolean isPublicPath(String path) {
         return path.startsWith("/api/v1/auth/")
                 || path.startsWith("/api/v1/webhooks/")
-                || path.startsWith("/api/v1/public/");
+                || path.startsWith("/api/v1/public/")
+                || path.equals("/api/v1/demo/status");
     }
 }

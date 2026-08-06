@@ -41,6 +41,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/actuator/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/v1/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/v1/demo/status").permitAll()
                         .requestMatchers(HttpMethod.GET, "/v1/webhooks/meta/whatsapp").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/webhooks/meta/whatsapp").permitAll()
                         .requestMatchers(HttpMethod.POST, "/v1/public/forms/**").permitAll()

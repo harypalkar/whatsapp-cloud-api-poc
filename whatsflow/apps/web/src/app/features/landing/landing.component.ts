@@ -53,28 +53,45 @@ export class LandingComponent {
   ];
 
   industries = [
-    'Retail', 'Clinics', 'Education', 'Hospitality',
-    'Finance ops', 'Logistics', 'SaaS teams', 'Local brands',
+    'Hospitals', 'Schools', 'Real Estate', 'Retail',
+    'Restaurants', 'Travel', 'Insurance', 'Finance',
   ];
 
-  outcomes = [
+  testimonials = [
     {
-      title: 'Faster go-live',
-      quote: 'Company setup, plan selection, and WhatsApp connect happen in one guided flow.',
+      quote: 'Our OPD reminders and health camps finally run from one console. Demo Mode helped the board see it live.',
+      name: 'Dr Meera Krishnan',
+      role: 'Medical Director, Metro Care Hospitals',
     },
     {
-      title: 'Clearer operations',
-      quote: 'Campaigns and inbox sit together so marketing and support stop working in silos.',
+      quote: 'Admission campaigns, parent inbox, and forms landed in the same week we evaluated WhatsFlow.',
+      name: 'Anil Deshmukh',
+      role: 'Principal, Horizon Public School',
     },
     {
-      title: 'Safer scale',
-      quote: 'Tokens stay encrypted and each workspace stays separated as you add companies.',
+      quote: 'Property enquiries no longer get lost in WhatsApp personal chats. Agents assign and close properly.',
+      name: 'Sneha Kapoor',
+      role: 'Sales Head, Skyline Realty',
     },
+  ];
+
+  videos = [
+    { title: 'Product tour', meta: '3:40 · Workspace walkthrough', poster: 'Tour' },
+    { title: 'Demo Mode', meta: '2:15 · ABC Hospital seed', poster: 'Demo' },
+    { title: 'Inbox & AI', meta: '4:05 · Agent workflow', poster: 'Inbox' },
+  ];
+
+  faqs = [
+    { q: 'Can I try WhatsFlow without Meta credentials?', a: 'Yes. Use Demo Login (demo@whatsflow.ai / Demo@123) to explore ABC Hospital with seeded customers, campaigns, and inbox.' },
+    { q: 'Does onboarding support GST and plans?', a: 'Yes. The wizard covers business details, GST, subscription, Meta Embedded Signup placeholder, and WhatsApp connect.' },
+    { q: 'Is the inbox WhatsApp-style?', a: 'Yes. Conversation list, delivery/read states, media previews, notes, and agent assignment are included for demos.' },
+    { q: 'Can I run demo scenarios?', a: 'Open Automations and run Hospital Appointment, School Admission, Restaurant Offer, Property Inquiry, or Insurance Renewal.' },
   ];
 
   plans: Array<{ name: string; price: string; unit: string; desc: string; featured?: boolean }> = [
     { name: 'Starter', price: '₹999', unit: '/mo', desc: '3 agents · 5k messages · core inbox' },
-    { name: 'Growth', price: '₹4,999', unit: '/mo', desc: '10 agents · 50k messages · campaigns + AI', featured: true },
+    { name: 'Growth', price: '₹4,999', unit: '/mo', desc: '10 agents · 50k messages · campaigns + AI' },
+    { name: 'Professional', price: '₹14,999', unit: '/mo', desc: '50 agents · 250k messages · automations · priority support', featured: true },
     { name: 'Enterprise', price: 'Custom', unit: '', desc: 'SLA · white-label · dedicated success' },
   ];
 
@@ -83,6 +100,7 @@ export class LandingComponent {
     'Cloud API connect',
     'Team inbox',
     'AI Studio',
+    'Book a demo',
     'Custom / other',
   ];
 

@@ -1,6 +1,17 @@
-.page-header h1 { font-family: "Fraunces", Georgia, serif; margin: 0 0 1rem; font-size: 1.8rem; }
-.card { background: var(--wf-card); border: 1px solid var(--wf-border); border-radius: .75rem; padding: 1.25rem; }
-.muted { color: var(--wf-muted); }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
-.stat { padding: 1rem; border-radius: .6rem; background: var(--wf-bg); border: 1px solid var(--wf-border); }
-.stat strong { display: block; font-size: 1.4rem; }
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.metrics div { display: grid; gap: 0.15rem; }
+.metrics span { color: var(--wf-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.metrics strong { font-family: "Fraunces", Georgia, serif; font-size: 1.35rem; }
+.toast {
+  margin: 0;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.55rem;
+  background: var(--wf-mint);
+  color: var(--wf-forest-deep);
+  font-weight: 600;
+  font-size: 0.88rem;
+}
